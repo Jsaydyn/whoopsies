@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damn i hate it when i accidentally make a social media site</title>
+</head>
+<body>
+    <h1>
+        Damn i hate it when i accidentally make a social media site
+    </h1>
+    <form id = "webReviewsForm">
+        <label for = "name">Name:</label>
+
+        <input type = "text" id = "name" autocomplete="off">
+        <br>
+
+        <label for = "message">Message:</label>
+
+        <input type = "text" id = "message" autocomplete="off">
+        <br>
+        <br>
+        <br>
+
+        <input type = "submit" value = "Submit">
+
+    </form>
+
+    <h2>Messages and stuff lmao</h2>
+    <div id ="webReviews">
+        <!--answers here lmoa-->
+
+    </div>
+</body>
+</html>
+
+<style>
+    body{
+        font-family: "Chalkboard", "Comic Sans MS";
+    }
+    form {
+        margin-bottom: 10px;
+    }
+    label {
+        width: 50px;
+    }
+    input, textarea{
+        width: 100px;
+        background-color: lightgrey;
+    }
+    input[type="submit"]{
+        background-color: rgb(53, 197, 197);
+        color: black;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover{
+        background-color: darkcyan;
+        color: white;
+        cursor: pointer;
+    }
+    div #webReviews {
+        padding: 10px;
+    }
+</style>
+
+<script>
+    document.getElementById("webReviewsForm").addEventListener("submit", function(event){
+        // Prevents default form submission
+        event.preventDefault();
+       
+        // Get input values
+        const name = document.getElementById("name").value;
+        const message = document.getElementById("message").value;
+       
+        // Create a new div with the name and message
+        const entryDiv = document.createElement("div");
+        entryDiv.innerHTML = `<strong>${name}:</strong> <br> ${message}`;
+       
+        // Add new message to the webReviews div
+        const webReviews = document.getElementById("webReviews");
+        webReviews.appendChild(entryDiv);
+       
+        // Clear the form
+        document.getElementById("webReviewsForm").reset();
+    });
+</script>
