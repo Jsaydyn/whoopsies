@@ -9,12 +9,12 @@
     <h1>
         Damn i hate it when i accidentally make a social media site
     </h1>
-    <form id = "webReviewsForm">
+    <form id = "guestbookForm">
         <label for = "name">Name:</label>
 
         <input type = "text" id = "name" autocomplete="nope">
         <br>
-
+        <br>
         <label for = "message">Message:</label>
 
         <input type = "text" id = "message" autocomplete="off">
@@ -26,8 +26,9 @@
 
     </form>
 
-    <h2>Messages and stuff lmao</h2>
-    <div id ="webReviews">
+
+    <div id ="guestbookEntries">
+        <h2>Messages and stuff lmao</h2>
         <!--answers here lmoa-->
 
     </div>
@@ -59,29 +60,64 @@
         color: white;
         cursor: pointer;
     }
-    div #webReviews {
+
+    input[id="message"]{
+        width: 50%;
+        height: 30px;
+
+    }
+
+    #guestbookEntries {
         padding: 10px;
+        background-color: lightgrey;
     }
 </style>
 
 <script>
-    document.getElementById("webReviewsForm").addEventListener("submit", function(event){
-        // Prevents default form submission
-        event.preventDefault();
-       
-        // Get input values
-        const name = document.getElementById("name").value;
-        const message = document.getElementById("message").value;
-       
-        // Create a new div with the name and message
-        const entryDiv = document.createElement("div");
-        entryDiv.innerHTML = `<strong>${name}:</strong> <br> ${message}`;
-       
-        // Add new message to the webReviews div
-        const webReviews = document.getElementById("webReviews");
-        webReviews.appendChild(entryDiv);
-       
-        // Clear the form
-        document.getElementById("webReviewsForm").reset();
-    });
+    // Function to add a new guestbook entry
+    function addEntry(name, message) {
+      const entryDiv = document.createElement("div");
+      entryDiv.innerHTML = `<strong>${name}:</strong> ${message}`;
+
+
+      const guestbookEntries = document.getElementById("guestbookEntries");
+      guestbookEntries.appendChild(entryDiv);
+    }
+
+
+    // Load entries from local storage
+    function loadEntries(){
+        const entries = JSON.parse(localStorage.getItem("guestbookEntries")) || [];
+        for (const entry of entries){
+            addEntry(entry.name, entry.message);
+        }
+    }
+
+
+    // Function to handle form submission
+    function handleSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+
+
+      addEntry(name, message);
+
+
+      // Save the entry to localStorage
+      const entries = JSON.parse(localStorage.getItem("guestbookEntries")) || [];
+      entries.push({ name, message });
+      localStorage.setItem("guestbookEntries", JSON.stringify(entries));
+
+
+      document.getElementById("guestbookForm").reset();
+    }
+
+
+    document.getElementById("guestbookForm").addEventListener("submit", handleSubmit);
+
+
+    // Load existing entries on page load
+    loadEntries();
 </script>
+
